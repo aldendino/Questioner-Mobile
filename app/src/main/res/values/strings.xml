@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Questioner</string>
+    <string name="action_settings">Load</string>
+    <string name="dialog_message">The file was not parseable.</string>
+    <string name="dialog_title">Error</string>
+
+</resources>
