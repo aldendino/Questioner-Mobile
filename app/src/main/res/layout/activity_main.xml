@@ -10,29 +10,46 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/questionText"
-        android:textColor="@android:color/black"
-        android:background="@android:color/white"
-        android:padding="@dimen/half_margin"
-        android:layout_marginBottom="@dimen/half_margin"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
     <FrameLayout
-        android:id="@+id/animatedFrame"
+        android:id="@+id/shadowFrame1"
+        android:layout_marginBottom="@dimen/half_margin"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@color/darker"
+        android:layout_weight="2" >
+
+        <TextView
+            android:id="@+id/questionText"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:paddingTop="@dimen/half_margin"
+            android:paddingLeft="@dimen/full_margin"
+            android:paddingRight="@dimen/full_margin"
+            android:paddingBottom="@dimen/full_margin"
+            android:layout_marginBottom="@dimen/shadow_bottom"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/shadowFrame2"
+        android:layout_marginTop="@dimen/half_margin"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/darker"
         android:layout_weight="1" >
 
         <TextView
             android:id="@+id/answerText"
             android:textColor="@android:color/black"
             android:background="@android:color/white"
-            android:padding="@dimen/half_margin"
-            android:layout_marginTop="@dimen/half_margin"
+            android:paddingTop="@dimen/half_margin"
+            android:paddingLeft="@dimen/full_margin"
+            android:paddingRight="@dimen/full_margin"
+            android:paddingBottom="@dimen/full_margin"
+            android:layout_marginBottom="@dimen/shadow_bottom"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -40,10 +57,9 @@
         <View
             android:id="@+id/fadeView"
             android:background="@color/dark"
-            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginBottom="@dimen/shadow_bottom"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            />
+            android:layout_height="fill_parent" />
 
     </FrameLayout>
 

@@ -1,5 +1,8 @@
 package com.aldendino.questioner;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,7 +19,7 @@ import java.io.*;
 /**
  * A representation of a basic question, consisting of a question, answer, and the option of a hint.
  */
-public class Question implements Serializable {
+public class Question implements Serializable, Parcelable {
     private String question; // The question.
     private String answer; // The answer.
 
@@ -62,7 +65,7 @@ public class Question implements Serializable {
      * @throws org.xml.sax.SAXException if there was a SAX error.
      */
     public static ArrayList<Question> parseXML(String input) throws IOException, ParserConfigurationException, SAXException {
-        ArrayList<Question> questionArray = new ArrayList<Question>();
+        ArrayList<Question> questionArray = new ArrayList<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new InputSource(new StringReader(input)));
@@ -92,5 +95,33 @@ public class Question implements Serializable {
         }
         return questionArray;
     }
-}   
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(question);
+        dest.writeString(answer);
+    }
+
+    public static final Parcelable.Creator<Question> CREATOR
+            = new Parcelable.Creator<Question>() {
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
+
+    private Question(Parcel in) {
+        question = in.readString();
+        answer = in.readString();
+    }
+
+}
 

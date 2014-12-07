@@ -45,9 +45,14 @@ public class MainActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager);
 
-        Question welcomeQuestion = new Question(welcome, help);
-        qm = new ArrayList<>();
-        qm.add(welcomeQuestion);
+        if (savedInstanceState != null) {
+            qm = savedInstanceState.getParcelableArrayList("array");
+        }
+        else {
+            Question welcomeQuestion = new Question(welcome, help);
+            qm = new ArrayList<>();
+            qm.add(welcomeQuestion);
+        }
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -57,7 +62,7 @@ public class MainActivity extends ActionBarActivity{
 
             @Override
             public void onPageScrolled(int i, float v, int i2) {
-                if(v == 0.0 && previous != i) {
+                /*if(v == 0.0 && previous != i) {
                     ScreenSlidePagerAdapter sspa = (ScreenSlidePagerAdapter) mPagerAdapter;
                     QuestionFragment qp = (QuestionFragment) sspa.getItem(previous);
                     try {
@@ -67,7 +72,7 @@ public class MainActivity extends ActionBarActivity{
                         Log.d(tag, e.toString());
                     }
                     previous = i;
-                }
+                }*/
             }
 
             @Override
@@ -81,12 +86,23 @@ public class MainActivity extends ActionBarActivity{
             }
         });
 
+        if (savedInstanceState != null) {
+            mPager.setCurrentItem(savedInstanceState.getInt("currentItem", 0));
+        }
+
         Intent intent = getIntent();
         String action = intent.getAction();
         if(action.equals(Intent.ACTION_VIEW)) {
             Uri data = intent.getData();
             loadData(data);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        bundle.putInt("currentItem", mPager.getCurrentItem());
+        bundle.putParcelableArrayList("array", qm);
+        super.onSaveInstanceState(bundle);
     }
 
     @Override
@@ -158,7 +174,7 @@ public class MainActivity extends ActionBarActivity{
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        private SparseArray<QuestionFragment> frags = new SparseArray<>();
+        //private SparseArray<QuestionFragment> frags = new SparseArray<>();
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -167,15 +183,15 @@ public class MainActivity extends ActionBarActivity{
         @Override
         public Fragment getItem(int position) {
             if(position >= qm.size() || position < 0) return null;
-            QuestionFragment fragment = frags.get(position);
-            if(fragment == null) {
+            QuestionFragment fragment;// = frags.get(position);
+            //if(fragment == null) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(QUESTION_KEY, qm.get(position));
                 bundle.putInt(INDEX_KEY, position + 1);
                 fragment = new QuestionFragment();
                 fragment.setArguments(bundle);
-                frags.put(position, fragment);
-            }
+                //frags.put(position, fragment);
+            //}
             return fragment;
         }
 

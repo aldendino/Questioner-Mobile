@@ -8,15 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
-import android.widget.Space;
 import android.widget.TextView;
 
 public class QuestionFragment extends Fragment {
     private TextView questionView;
     private TextView answerView;
-    private FrameLayout animatedFrame;
     private View fadeView;
+
+    private static final String QUESTION_STATE = "questionState";
+    private static final String INDEX_STATE = "indexState";
+    private static final String HIDDEN_STATE = "hiddenState";
 
     private final String tag = "tag";
 
@@ -46,8 +47,7 @@ public class QuestionFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.activity_main, container, false);
-        animatedFrame = (FrameLayout) rootView.findViewById(R.id.animatedFrame);
-        fadeView = (View) rootView.findViewById(R.id.fadeView);
+        fadeView = rootView.findViewById(R.id.fadeView);
         questionView = (TextView) rootView.findViewById(R.id.questionText);
         answerView = (TextView) rootView.findViewById(R.id.answerText);
         questionView.setMovementMethod(new ScrollingMovementMethod());
@@ -60,26 +60,37 @@ public class QuestionFragment extends Fragment {
             }
         });
 
-        if(question == null) {
-            questionView.setText(welcome);
+        if(savedInstanceState != null) {
+            question = savedInstanceState.getParcelable(QUESTION_STATE);
+            questionIndex = savedInstanceState.getInt(INDEX_STATE);
+            hidden = savedInstanceState.getBoolean(HIDDEN_STATE);
+            Log.d(tag, "" +hidden);
         }
-        else {
+
+        if(question != null) {
             setQuestion();
         }
         return rootView;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(tag, "" + questionIndex);
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(QUESTION_STATE, question);
+        outState.putInt(INDEX_STATE, questionIndex);
+        outState.putBoolean(HIDDEN_STATE, hidden);
+        super.onSaveInstanceState(outState);
     }
 
     private void setQuestion() {
         if(question != null) {
             questionView.setText(questionIndex + ". " + question.getQuestion());
             answerView.setText(question.getAnswer().toString());
-            clearAnswer();
+            if(hidden) {
+                clearAnswer();
+            }
+            else {
+                setAnswer();
+            }
         }
     }
 
