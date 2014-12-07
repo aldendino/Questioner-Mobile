@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,6 +23,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity{
+
+    public static String QUESTION_KEY = "question";
+    public static String INDEX_KEY = "index";
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -41,12 +45,40 @@ public class MainActivity extends ActionBarActivity{
         setContentView(R.layout.activity_pager);
 
         Question welcomeQuestion = new Question(welcome, help);
-        qm = new ArrayList<Question>();
+        qm = new ArrayList<>();
         qm.add(welcomeQuestion);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            private int previous;
+
+            @Override
+            public void onPageScrolled(int i, float v, int i2) {
+                if(v == 0.0 && previous != i) {
+                    ScreenSlidePagerAdapter sspa = (ScreenSlidePagerAdapter) mPagerAdapter;
+                    QuestionFragment qp = (QuestionFragment) sspa.getItem(previous);
+                    try {
+                        if (qp != null) qp.clearAnswer();
+                    }
+                    catch(Exception e) {
+                        Log.d(tag, e.toString());
+                    }
+                    previous = i;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -124,17 +156,24 @@ public class MainActivity extends ActionBarActivity{
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        private SparseArray<QuestionFragment> frags = new SparseArray<>();
+
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("question", qm.get(position));
-            bundle.putInt("index", position + 1);
-            QuestionFragment fragment = new QuestionFragment();
-            fragment.setArguments(bundle);
+            if(position >= qm.size() || position < 0) return null;
+            QuestionFragment fragment = frags.get(position);
+            if(fragment == null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(QUESTION_KEY, qm.get(position));
+                bundle.putInt(INDEX_KEY, position + 1);
+                fragment = new QuestionFragment();
+                fragment.setArguments(bundle);
+                frags.put(position, fragment);
+            }
             return fragment;
         }
 

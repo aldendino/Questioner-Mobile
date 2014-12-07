@@ -21,15 +21,30 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/answerText"
-        android:textColor="@android:color/black"
-        android:background="@android:color/white"
-        android:padding="@dimen/half_margin"
-        android:layout_marginTop="@dimen/half_margin"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+    <FrameLayout
+        android:id="@+id/animatedFrame"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/answerText"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:padding="@dimen/half_margin"
+            android:layout_marginTop="@dimen/half_margin"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:id="@+id/fadeView"
+            android:background="@color/dark"
+            android:layout_marginTop="@dimen/half_margin"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
+
+    </FrameLayout>
 
 </LinearLayout>
