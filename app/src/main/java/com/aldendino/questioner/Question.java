@@ -85,7 +85,9 @@ public class Question implements Serializable {
                         }
                     }
                 }
-                questionArray.add(question);
+                if(question.getQuestion() != null && question.getAnswer() != null) {
+                    questionArray.add(question);
+                }
             }
         }
         return questionArray;

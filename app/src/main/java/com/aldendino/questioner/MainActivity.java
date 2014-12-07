@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -137,6 +138,7 @@ public class MainActivity extends ActionBarActivity{
             }
             inputStream.close();
             qm = Question.parseXML(stringBuilder.toString());
+            if(qm.size() == 0) throw new IOException();
             mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
             mPager.setAdapter(mPagerAdapter);
         }
