@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends ActionBarActivity{
 
@@ -38,6 +39,7 @@ public class MainActivity extends ActionBarActivity{
     public final String help = "To do so, click the icon in the top right corner.";
 
     private ArrayList<Question> qm;
+    private Random generator;
 
     private final String tag = "tag";
 
@@ -45,6 +47,7 @@ public class MainActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager);
+        getSupportActionBar().getThemedContext();
 
         if (savedInstanceState != null) {
             qm = savedInstanceState.getParcelableArrayList("array");
@@ -98,6 +101,7 @@ public class MainActivity extends ActionBarActivity{
             loadData(data);
         }
 
+        generator = new Random();
         setHome();
     }
 
@@ -122,8 +126,12 @@ public class MainActivity extends ActionBarActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_load) {
             performFileSearch();
+            return true;
+        }
+        else if(id == R.id.action_random) {
+            scrollToRandom();
             return true;
         }
         else if (id == android.R.id.home) {
@@ -209,6 +217,17 @@ public class MainActivity extends ActionBarActivity{
         @Override
         public int getCount() {
             return qm.size();
+        }
+    }
+
+    private void scrollToRandom() {
+        if(qm.size() > 1) {
+            int random = generator.nextInt(qm.size());
+            int current = mPager.getCurrentItem();
+            while(random == current) {
+                random = generator.nextInt(qm.size());
+            }
+            mPager.setCurrentItem(random);
         }
     }
 }

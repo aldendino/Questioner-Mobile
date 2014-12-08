@@ -1,9 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:icon="@android:drawable/stat_sys_download"
+    <item android:id="@+id/action_load"
+        android:title="@string/action_load"
+        android:icon="@drawable/ic_load"
         android:orderInCategory="100"
         app:showAsAction="always" />
+    <item android:id="@+id/action_random"
+        android:title="@string/action_random"
+        android:icon="@drawable/ic_random"
+        android:orderInCategory="99"
+        app:showAsAction="ifRoom" />
 </menu>

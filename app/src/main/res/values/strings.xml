@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">Questioner</string>
-    <string name="action_settings">Load</string>
-    <string name="dialog_message">The file was not parseable.</string>
-    <string name="dialog_title">Error</string>
+    <string name="action_load">Load</string>
+    <string name="action_random">Random</string>
+    <string name="dialog_message">The file could not be parsed.</string>
+    <string name="dialog_title">File Parsing Error</string>
 
 </resources>
