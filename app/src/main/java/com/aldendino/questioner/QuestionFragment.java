@@ -3,7 +3,6 @@ package com.aldendino.questioner;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,6 @@ public class QuestionFragment extends Fragment {
             question = savedInstanceState.getParcelable(QUESTION_STATE);
             questionIndex = savedInstanceState.getInt(INDEX_STATE);
             hidden = savedInstanceState.getBoolean(HIDDEN_STATE);
-            Log.d(tag, "" +hidden);
         }
 
         if(question != null) {

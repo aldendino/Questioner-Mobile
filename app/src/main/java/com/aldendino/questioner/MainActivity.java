@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,7 +78,7 @@ public class MainActivity extends ActionBarActivity{
 
             @Override
             public void onPageSelected(int i) {
-
+                setHome();
             }
 
             @Override
@@ -96,6 +97,12 @@ public class MainActivity extends ActionBarActivity{
             Uri data = intent.getData();
             loadData(data);
         }
+
+        setHome();
+    }
+
+    private void setHome() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(mPager.getCurrentItem() > 0);
     }
 
     @Override
@@ -117,6 +124,10 @@ public class MainActivity extends ActionBarActivity{
 
         if (id == R.id.action_settings) {
             performFileSearch();
+            return true;
+        }
+        else if (id == android.R.id.home) {
+            mPager.setCurrentItem(0);
             return true;
         }
 
