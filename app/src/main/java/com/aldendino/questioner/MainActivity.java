@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity{
         });
 
         if (savedInstanceState != null) {
-            mPager.setCurrentItem(savedInstanceState.getInt("currentItem", 0));
+            mPager.setCurrentItem(savedInstanceState.getInt("currentItem", 0), true);
         }
 
         Intent intent = getIntent();
@@ -227,7 +227,7 @@ public class MainActivity extends ActionBarActivity{
             while(random == current) {
                 random = generator.nextInt(qm.size());
             }
-            mPager.setCurrentItem(random);
+            mPager.setCurrentItem(random, true);
         }
     }
 }
