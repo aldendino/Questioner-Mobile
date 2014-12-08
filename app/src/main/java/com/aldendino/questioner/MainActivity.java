@@ -10,11 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,8 +25,11 @@ import java.util.Random;
 
 public class MainActivity extends ActionBarActivity{
 
-    public static String QUESTION_KEY = "question";
-    public static String INDEX_KEY = "index";
+    public static final String QUESTION_KEY = "question";
+    public static final String INDEX_KEY = "index";
+
+    private static final String CURRENT_INDEX = "current_index";
+    private static final String CURRENT_ARRAY = "current_array";
 
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -41,6 +42,8 @@ public class MainActivity extends ActionBarActivity{
     private ArrayList<Question> qm;
     private Random generator;
 
+    private boolean smoothScrollEnabled = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,7 @@ public class MainActivity extends ActionBarActivity{
         getSupportActionBar().getThemedContext();
 
         if (savedInstanceState != null) {
-            qm = savedInstanceState.getParcelableArrayList("array");
+            qm = savedInstanceState.getParcelableArrayList(CURRENT_ARRAY);
         }
         else {
             Question welcomeQuestion = new Question(welcome, help);
@@ -89,7 +92,7 @@ public class MainActivity extends ActionBarActivity{
         });
 
         if (savedInstanceState != null) {
-            mPager.setCurrentItem(savedInstanceState.getInt("currentItem", 0), true);
+            mPager.setCurrentItem(savedInstanceState.getInt(CURRENT_INDEX, 0), smoothScrollEnabled);
         }
 
         Intent intent = getIntent();
@@ -109,8 +112,8 @@ public class MainActivity extends ActionBarActivity{
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
-        bundle.putInt("currentItem", mPager.getCurrentItem());
-        bundle.putParcelableArrayList("array", qm);
+        bundle.putInt(CURRENT_INDEX, mPager.getCurrentItem());
+        bundle.putParcelableArrayList(CURRENT_ARRAY, qm);
         super.onSaveInstanceState(bundle);
     }
 
@@ -225,7 +228,7 @@ public class MainActivity extends ActionBarActivity{
             while(random == current) {
                 random = generator.nextInt(qm.size());
             }
-            mPager.setCurrentItem(random, true);
+            mPager.setCurrentItem(random, smoothScrollEnabled);
         }
     }
 }
