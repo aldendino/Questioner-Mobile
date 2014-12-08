@@ -41,8 +41,6 @@ public class MainActivity extends ActionBarActivity{
     private ArrayList<Question> qm;
     private Random generator;
 
-    private final String tag = "tag";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +60,7 @@ public class MainActivity extends ActionBarActivity{
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            private int previous;
+            //private int previous;
 
             @Override
             public void onPageScrolled(int i, float v, int i2) {
@@ -188,7 +186,7 @@ public class MainActivity extends ActionBarActivity{
             });
             AlertDialog dialog = builder.create();
             dialog.show();
-            Log.d(tag, e.toString());
+            Log.d(getClass().getSimpleName(), e.toString());
         }
     }
 

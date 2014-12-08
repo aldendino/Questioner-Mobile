@@ -18,8 +18,6 @@ public class QuestionFragment extends Fragment {
     private static final String INDEX_STATE = "indexState";
     private static final String HIDDEN_STATE = "hiddenState";
 
-    private final String tag = "tag";
-
     public final String welcome = "Open an XML file to start.";
 
     private Question question = null;
