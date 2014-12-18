@@ -36,6 +36,7 @@ public class QuestionFragment extends Fragment {
         if(questionArg != null) {
             this.question = questionArg;
         }
+        super.setArguments(args);
     }
 
     @Override
