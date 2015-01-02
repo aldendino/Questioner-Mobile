@@ -227,7 +227,12 @@ public class MainActivity extends ActionBarActivity{
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             super.destroyItem(container, position, object);
-            frags.removeAt(position);
+            try {
+                frags.removeAt(position);
+            }
+            catch(Exception e) {
+
+            }
         }
 
         @Override
